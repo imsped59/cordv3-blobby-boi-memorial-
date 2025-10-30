@@ -1,0 +1,17 @@
+<pre style="color:lime;background:black;">
+   _____ _     _     _     _     
+  | __  | |___| |___| |___| |___ 
+  | __  | | . | | . | | . | | . |
+  |_____|_|___|_|___|_|___|_|___|
+       SLIME TRADING TERMINAL
+</pre>
+<div id="prices"></div>
+<div id="wisdom"></div>
+<script>
+  const ws = new WebSocket('ws://' + location.host);
+  ws.onmessage = e => {
+    const d = JSON.parse(e.data);
+    document.getElementById('prices').innerHTML = Object.entries(d.prices).map(([c,p])=>`${c}: $${p.toFixed(2)}`).join('<br>');
+    document.getElementById('wisdom').innerHTML = `<i>"${d.blobSays}"</i>`;
+  };
+</script>
